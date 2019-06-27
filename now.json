@@ -1,7 +1,7 @@
 {
     "name": "image-store-forward",
     "builds": [{
-        "src": "index.js", "use": "@now/node"
+        "src": "index.js", "use": "@now/node-server"
     }],
     "version": 2
 }
