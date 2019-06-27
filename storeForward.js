@@ -5,7 +5,7 @@ var fs = require('fs');
 
 var storeForward = {
     store: function(url, success, error) {
-        const TEMP_DIR = __dirname + "/tmp/"
+        const TEMP_DIR = "/tmp/"
         if (!fs.existsSync(TEMP_DIR)) {
             fs.mkdirSync(TEMP_DIR);
         }
