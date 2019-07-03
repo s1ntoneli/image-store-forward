@@ -22,7 +22,11 @@ function handle(req, res) {
             storeForward.store(url, result => {
 //                console.log('forwarded', result);
                 var data = JSON.parse(result).data
-//                console.log('data', data)
+                console.log('data', data)
+                if (!data) {
+                    res.json(JSON.stringify({code: -1, msg: "forward failed"}));
+                    return;
+                }
                 firebase.save(key, url, key, data.url, data.hash, data)
                 res.json({
                     originalUrl: url,
