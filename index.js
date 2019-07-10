@@ -1,5 +1,5 @@
 var storeForward = require('./storeForward.js');
-var firebase = require('./firebase.js');
+var firebase = require('./firebase-api.js');
 var crypto = require('crypto');
 const app = require('express')()
 
