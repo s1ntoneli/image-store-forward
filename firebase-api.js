@@ -3,23 +3,29 @@ var rp = require('request-promise');
 
 var API_URL = 'https://us-central1-tools-4ce04.cloudfunctions.net';
 
-function requestAPI(route, params) {
+function requestAPI(route, params, cb) {
     //return rp.get(API_URL+'/'+route+"?key=ohash");
     var options = {
         uri: API_URL + '/' + route,
-        qs: params
+        qs: params,
+        json: true
     }
-    return rp(options);
+    return request(options, cb);
 }
 
 var firebase = {
-    find: async (key, res, error) => {
-        var result = JSON.parse(await requestAPI('find_transformed_image', {key: key}));
-        if (result && result.galleryHash) {
-            res(result);
-        } else {
-            error('not found');
-        }
+    find: (key, res, error) => {
+//        console.log('request', key)
+        requestAPI('find_transformed_image', {key: key}, (err, response, body)=> {
+            if (err) {
+                error(err);
+            } else if (body && body.galleryHash) {
+                //console.log(body);
+                res(body);
+            } else {
+                error('not found');
+            }
+        })
     },
     save: (key, originalUrl, originalHash, galleryUrl, galleryHash, rawData) => {
         //console.log('save', galleryUrl, galleryHash, rawData);
@@ -34,4 +40,4 @@ var firebase = {
 }
 
 module.exports = firebase;
-//firebase.find('ohash',console.log, console.error).catch(console.error);
+//firebase.find('ohash',console.log, console.error)
